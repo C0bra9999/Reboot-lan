@@ -282,7 +282,7 @@
 
   /* BORDSBOKNING */
   .seats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(60px,1fr)); gap:10px; margin:20px 0; }
-  .seat { width:60px; height:60px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-family:'Orbitron',monospace; cursor:pointer; transition:all 0.2s; background:var(--bg2); color:var(--text-dim); }
+  .seat { width:40px; height:40px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-family:'Orbitron',monospace; cursor:pointer; transition:all 0.2s; background:var(--bg2); color:var(--text-dim); }
   .seat:hover:not(.taken) { border-color:var(--purple); color:var(--purple-bright); }
   .seat.taken { background:rgba(255,48,96,0.15); border-color:var(--red); color:var(--red); cursor:not-allowed; }
   .seat.selected { background:rgba(155,48,255,0.2); border-color:var(--purple); color:var(--purple-bright); box-shadow:0 0 15px var(--purple-glow); }
@@ -1522,7 +1522,7 @@ function renderSeats(){
       title="${tooltip}"
       style="position:absolute;left:${seat.x}%;top:${seat.y}%;
              transform:translate(-50%,-50%);
-             width:44px;height:30px;border-radius:3px;
+             width:32px;height:22px;border-radius:3px;
              background:${bg};border:2px solid ${border};
              cursor:${booked?'not-allowed':'pointer'};pointer-events:all;
              display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
@@ -2111,7 +2111,7 @@ function renderAdminSeatmap(){
 
     if(isCrew){
       return `<div class="admin-seat-dot" data-id="${esc(seat.id)}"
-        title="${esc(seat.id)} — CREW · högerklicka för att ta bort"
+        title="${esc(seat.id)} — · högerklicka för att ta bort"
         style="position:absolute;left:${seat.x}%;top:${seat.y}%;
                transform:translate(-50%,-50%);
                width:42px;height:28px;border-radius:3px;
@@ -2121,7 +2121,7 @@ function renderAdminSeatmap(){
                color:#f5a623;letter-spacing:1px;
                cursor:context-menu;pointer-events:all;
                box-shadow:0 0 8px rgba(245,166,35,0.4);">
-        CREW
+       
       </div>`;
     }
 
@@ -2144,11 +2144,11 @@ function renderAdminSeatmap(){
 
   if(list){
     const playerSeats = seatLayout.filter(s=>(s.type||'player')==='player');
-    const crewSeats   = seatLayout.filter(s=>s.type==='crew');
+    constSeats   = seatLayout.filter(s=>s.type==='crew');
     list.innerHTML = [
       playerSeats.length ? `<div style="width:100%;font-family:'Orbitron',monospace;font-size:0.55rem;color:var(--cyan);letter-spacing:2px;margin-bottom:4px;">🎮 SPELARE</div>` : '',
       ...playerSeats.map(s=>`<div style="background:var(--bg2);border:1px solid rgba(0,238,255,0.2);padding:4px 10px;font-family:'Orbitron',monospace;font-size:0.6rem;color:var(--text-dim);display:flex;align-items:center;gap:6px;">${esc(s.id)}<span style="color:var(--red);cursor:pointer;" onclick="removeSeat('${esc(s.id)}')">✕</span></div>`),
-      crewSeats.length ? `<div style="width:100%;font-family:'Orbitron',monospace;font-size:0.55rem;color:#f5a623;letter-spacing:2px;margin:8px 0 4px;">👷 CREW</div>` : '',
+     Seats.length ? `<div style="width:100%;font-family:'Orbitron',monospace;font-size:0.55rem;color:#f5a623;letter-spacing:2px;margin:8px 0 4px;">👷 CREW</div>` : '',
       ...crewSeats.map(s=>`<div style="background:var(--bg2);border:1px solid rgba(245,166,35,0.2);padding:4px 10px;font-family:'Orbitron',monospace;font-size:0.6rem;color:#f5a623;display:flex;align-items:center;gap:6px;">${esc(s.id)}<span style="color:var(--red);cursor:pointer;" onclick="removeSeat('${esc(s.id)}')">✕</span></div>`),
     ].join('') || '<span style="color:var(--text-dim);font-size:0.85rem;">Inga platser placerade ännu.</span>';
   }
